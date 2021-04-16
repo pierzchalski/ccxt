@@ -1768,6 +1768,9 @@ class ftx(Exchange):
             headers[keyField] = self.apiKey
             headers[tsField] = timestamp
             headers[signField] = signature
+            if self.subaccount is not None:
+                headers[headerPrefix + "-SUBACCOUNT"] = self.subaccount
+
         return {'url': url, 'method': method, 'body': body, 'headers': headers}
 
     def handle_errors(self, code, reason, url, method, headers, body, response, requestHeaders, requestBody):

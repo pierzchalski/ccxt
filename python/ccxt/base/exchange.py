@@ -172,6 +172,7 @@ class Exchange(object):
     apiKey = ''
     secret = ''
     password = ''
+    subaccount = None
     uid = ''
     privateKey = ''  # a "0x"-prefixed hexstring private key for a wallet
     walletAddress = ''  # the wallet address "0x"-prefixed hexstring

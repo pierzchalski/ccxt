@@ -45,6 +45,7 @@ class btcmarkets(Exchange):
                 'fetchTrades': True,
                 'fetchTransactions': True,
                 'fetchWithdrawals': True,
+                'withdraw': True,
             },
             'urls': {
                 'logo': 'https://user-images.githubusercontent.com/51840849/89731817-b3fb8480-da52-11ea-817f-783b08aaf32b.jpg',
@@ -381,6 +382,17 @@ class btcmarkets(Exchange):
             self.safe_number(ohlcv, 4),  # close
             self.safe_number(ohlcv, 5),  # volume
         ]
+
+    def withdraw(self, code, amount, address, tag=None, params={}):
+        if tag is not None:
+            address += f"?dt={tag}"
+        request = {
+            'assetName': code,
+            'amount': amount,
+            'address': address,
+        }
+        response = self.privatePostWithdrawals(self.extend(request, params))
+        return self.parse_transaction(response)
 
     def fetch_ohlcv(self, symbol, timeframe='1m', since=None, limit=None, params={}):
         self.load_markets()
